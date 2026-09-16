@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ARC FARM — Cozy Farming Adventure</title>
-  <meta name="description" content="ARC FARM is a cozy pixel-art farming life-sim. Restore your grandfather's farm, befriend villagers, fish, mine, and join the Genesis NFT whitelist.">
+  <title>ARC FARM — Cozy Farming Adventure & $ARC Token</title>
+  <meta name="description" content="ARC FARM is a cozy pixel-art farming life-sim. Restore your grandfather's farm, befriend villagers, fish, mine, and join the $ARC Token whitelist.">
 
   <!-- Open Graph / Discord / WhatsApp / Facebook -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://arcfarm.online/">
-  <meta property="og:title"       content="ARC FARM — Cozy Farming Adventure">
-  <meta property="og:description" content="Restore your grandfather's farm. Befriend the village. Build your ARC FARM story — then mint it as an NFT. Play free in your browser!">
+  <meta property="og:title"       content="ARC FARM — Cozy Farming Adventure & $ARC Token">
+  <meta property="og:description" content="Restore your grandfather's farm. Befriend the village. Harvest crops, uncover ancient secrets, and earn $ARC Token. Play free in your browser!">
   <meta property="og:image"       content="https://arcfarm.online/assets/homepage/hero.png">
   <meta property="og:image:width"  content="1200">
   <meta property="og:image:height" content="630">
@@ -18,8 +18,8 @@
 
   <!-- Twitter Card — summary supaya judul + deskripsi muncul -->
   <meta name="twitter:card"        content="summary">
-  <meta name="twitter:title"       content="ARC FARM — Cozy Farming Adventure">
-  <meta name="twitter:description" content="Restore your grandfather's farm. Befriend the village. Build your ARC FARM story — then mint it as an NFT. Play free in your browser!">
+  <meta name="twitter:title"       content="ARC FARM — Cozy Farming Adventure & $ARC Token">
+  <meta name="twitter:description" content="Restore your grandfather's farm. Befriend the village. Harvest crops, uncover ancient secrets, and earn $ARC Token. Play free in your browser!">
   <meta name="twitter:image"       content="https://arcfarm.online/assets/homepage/favicon_48.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/homepage/favicon_32.png">
@@ -111,16 +111,95 @@
     .card h3 { font-size: 12px; margin: 8px 0 6px; }
     .card .role { color: var(--red); }
     footer { text-align: center; color: var(--cream); text-shadow: 2px 2px 0 #000; font-size: 20px; padding: 10px; }
+
+    /* Storytelling / Prologue styles */
+    .story-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+    .story-tab-btn {
+      font-family: "Press Start 2P", monospace; font-size: 11px; padding: 10px 14px;
+      background: var(--wood-light); color: var(--cream); border: 3px solid var(--outline);
+      box-shadow: 0 4px 0 var(--wood-dark); cursor: pointer; transition: transform .1s, background .15s;
+    }
+    .story-tab-btn:hover { background: var(--cream); color: var(--outline); transform: translateY(1px); box-shadow: 0 3px 0 var(--wood-dark); }
+    .story-tab-btn.active { background: var(--red); color: #fff; box-shadow: 0 4px 0 #6b1f12; }
+
+    .story-content {
+      background: #fdf7e7; border: 4px solid var(--outline); box-shadow: inset 0 0 14px rgba(90,52,24,.12);
+      padding: 22px 24px; min-height: 280px; position: relative;
+    }
+    .story-chapter { display: none; animation: storyFadeIn .25s ease-out; }
+    .story-chapter.active { display: block; }
+    @keyframes storyFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .story-badge {
+      display: inline-block; font-family: "Press Start 2P", monospace; font-size: 10px;
+      padding: 6px 10px; background: var(--wood); color: var(--cream);
+      border: 2px solid var(--outline); margin-bottom: 12px;
+    }
+
+    .story-letter {
+      background: #fff9ea; border: 3px dashed var(--wood-light); padding: 20px 24px;
+      margin: 14px 0; position: relative; font-size: 21px; line-height: 1.45;
+      box-shadow: 0 4px 0 rgba(90,52,24,.08);
+    }
+    .story-stamp {
+      float: right; margin: 0 0 12px 14px; background: var(--red); color: var(--cream);
+      border: 2px dashed var(--cream); padding: 6px 12px; font-family: "Press Start 2P", monospace;
+      font-size: 10px; transform: rotate(3deg); box-shadow: 2px 2px 0 rgba(0,0,0,.25);
+    }
+    .story-sign {
+      display: block; margin-top: 14px; text-align: right; font-style: italic;
+      color: var(--wood-dark); font-weight: bold; font-size: 22px;
+    }
+
+    .npc-quote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin: 16px 0 10px; }
+    .npc-quote-card {
+      display: flex; gap: 12px; align-items: flex-start; background: #fff8e8;
+      border: 3px solid var(--outline); padding: 12px; box-shadow: 0 4px 0 var(--wood-dark);
+    }
+    .npc-quote-card img { width: 68px; height: 68px; border: 2px solid var(--outline); background: var(--cream-dark); flex-shrink: 0; image-rendering: pixelated; }
+    .npc-quote-text h4 { font-family: "Press Start 2P", monospace; font-size: 10px; margin: 0 0 4px; color: var(--red); }
+    .npc-quote-text .npc-role { font-size: 16px; color: #7a6647; margin-bottom: 4px; }
+    .npc-quote-text p { font-size: 19px; margin: 0; line-height: 1.3; }
+
+    .season-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 14px 0; }
+    .season-card { border: 3px solid var(--outline); background: #fff; padding: 14px; box-shadow: 0 4px 0 var(--wood-dark); }
+    .season-card h4 { font-family: "Press Start 2P", monospace; font-size: 11px; margin: 0 0 6px; }
+    .season-card.spring h4 { color: #2e7d32; }
+    .season-card.summer h4 { color: #e65100; }
+    .season-card.autumn h4 { color: #bf360c; }
+    .season-card.winter h4 { color: #0277bd; }
+    .season-card p { font-size: 18px; margin: 0; line-height: 1.3; }
+
+    .token-lore-box {
+      background: linear-gradient(135deg, #fff9e6 0%, #ffecb3 100%);
+      border: 4px solid var(--outline); padding: 18px; box-shadow: 0 5px 0 var(--wood-dark);
+      margin: 14px 0;
+    }
+    .token-lore-box h3 { font-size: 13px; color: var(--red); margin: 0 0 8px; }
+    .token-perks { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 12px; }
+    .token-perk-item { background: rgba(255,255,255,.9); border: 2px solid var(--outline); padding: 8px 12px; font-size: 18px; line-height: 1.3; }
+    .token-perk-item b { color: var(--red); }
+
+    .story-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; flex-wrap: wrap; gap: 12px; }
+    .story-cta-box {
+      margin-top: 20px; background: var(--wood); border: 4px solid var(--outline);
+      padding: 18px; text-align: center; color: var(--cream);
+      box-shadow: 0 5px 0 var(--wood-dark);
+    }
+    .story-cta-box h3 { font-size: 13px; color: #ffe89e; margin: 0 0 8px; }
+    .story-cta-box p { font-size: 20px; margin: 0 0 14px; }
+    .story-cta-box .actions { justify-content: center; }
   </style>
 </head>
 <body>
 <header>
   <nav>
     <a class="brand" href="#top"><img src="assets/homepage/logo.png" alt="ARC FARM"></a>
+    <a class="tab" href="#story">Story</a>
     <a class="tab" href="#play">Play</a>
+    <a class="tab" href="#token">$ARC Token</a>
     <a class="tab" href="#about">About</a>
     <a class="tab" href="#features">Features</a>
-    <a class="tab" href="#nft">NFT Whitelist</a>
     <a class="tab" href="#characters">Characters</a>
     <a class="tab" href="#howto">How to Play</a>
   </nav>
@@ -129,10 +208,138 @@
   <div class="hero">
     <div class="shade">
       <img class="logo" src="assets/homepage/logo.png" alt="ARC FARM">
-      <div class="tagline">Restore your grandfather's farm. Befriend the village. Build your ARC FARM story — then mint it as an NFT.</div>
+      <div class="tagline">Restore your grandfather's farm. Befriend the village. Harvest rare crops, uncover ancient secrets, and earn $ARC Token!</div>
       <div class="cta">
-        <a class="btn" href="#play">PLAY NOW</a>
-        <a class="btn secondary" href="#nft">JOIN WHITELIST</a>
+        <a class="btn" href="#story">PROLOGUE STORY</a>
+        <a class="btn secondary" href="#play">PLAY GAME</a>
+        <a class="btn ghost" href="#token">$ARC TOKEN</a>
+      </div>
+    </div>
+  </div>
+  <div class="panel" id="story">
+    <h2>The Legend of Kenanga Valley — Prologue</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <p>Before you step off the morning carriage into the valley, discover the forgotten memories, the letter from the past, and the ancient mystery waiting beneath the soil.</p>
+
+    <div class="story-nav" id="story-nav">
+      <button class="story-tab-btn active" type="button" data-chapter="1">📜 I. GRANDPA'S LETTER</button>
+      <button class="story-tab-btn" type="button" data-chapter="2">🌄 II. ARRIVAL AT VALLEY</button>
+      <button class="story-tab-btn" type="button" data-chapter="3">🌾 III. FOUR SEASONS</button>
+      <button class="story-tab-btn" type="button" data-chapter="4">🪙 IV. SECRET OF $ARC</button>
+    </div>
+
+    <div class="story-content">
+      <!-- Chapter 1 -->
+      <div class="story-chapter active" id="chapter-1">
+        <span class="story-badge">CHAPTER I · THE WORN ENVELOPE</span>
+        <div class="story-letter">
+          <div class="story-stamp">ARC 1994 · EXPRESS</div>
+          <p>You stare out through the rain-streaked window of your high-rise city apartment. Endless car horns, cold concrete towers, and months of soul-draining office hours have dimmed the spark inside you.</p>
+          <p>Then, a sharp knock echoes at your door. An elderly mailman hands you an old parchment envelope, sealed with crimson beeswax. As your fingers break the wax seal, a faint, sweet fragrance of dried kenanga flowers drifts out. It is the unmistakable handwriting of your grandfather:</p>
+          <p><i>"My dearest grandchild,<br><br>
+          If you are reading these lines, it means the city's relentless gears have worn you thin. I know that exhausted hollow in your chest, because fifty years ago, I felt the exact same way.<br><br>
+          Back then, I walked away from the smog and discovered a hidden sanctuary tucked between misty emerald hills: <b>Kenanga Valley</b>. Here, the river waters run crystal clear, the morning air heals the tired mind, and the soil gives back tenfold whatever love you pour into it.<br><br>
+          I cleared the stones, built our family homestead, and lived the happiest years of my life. But time moves on, my hands grew old, and now the fields sleep beneath wild grass and forgotten memories.<br><br>
+          I have deeded the entire farm to you. Pack your bag. Leave the concrete behind. Take the morning train to the end of the line. Your true life is waiting on the hill."</i></p>
+          <div class="story-sign">— With love, Grandpa</div>
+        </div>
+      </div>
+
+      <!-- Chapter 2 -->
+      <div class="story-chapter" id="chapter-2">
+        <span class="story-badge">CHAPTER II · STEPPING OFF THE CARRIAGE</span>
+        <p>The wooden horse carriage rattles over the timber bridge as the morning mist lifts across the peaks. Below lies Kenanga Village: quaint wooden houses with smoking chimneys, emerald terraced fields, and the distant blue shimmer of the ocean bay.</p>
+        <p>As you step down onto the village plaza cobblestones, the friendly residents gather to welcome you home:</p>
+        
+        <div class="npc-quote-grid">
+          <div class="npc-quote-card">
+            <img src="assets/sprites/portraits/npc_bule.png" alt="Mayor Harold">
+            <div class="npc-quote-text">
+              <h4>Mayor Harold</h4>
+              <div class="npc-role">Village Chief</div>
+              <p>"Bless my soul! You have your granddad's determined eyes, kid! The farm has missed its master. Here's a rusty hoe and a watering can — show us what you're made of!"</p>
+            </div>
+          </div>
+          <div class="npc-quote-card">
+            <img src="assets/sprites/portraits/npc_sari.png" alt="Sarah">
+            <div class="npc-quote-text">
+              <h4>Sarah</h4>
+              <div class="npc-role">General Store</div>
+              <p>"Welcome to our little valley! I sell seasonal seeds, fertilizers, and supplies. Put your fresh harvests into the wooden shipping bin every evening — I'll pay you gold every morning!"</p>
+            </div>
+          </div>
+          <div class="npc-quote-card">
+            <img src="assets/sprites/portraits/npc_jaka.png" alt="Jack">
+            <div class="npc-quote-text">
+              <h4>Jack</h4>
+              <div class="npc-role">Blacksmith</div>
+              <p>"Hmph. Don't go breaking your back with basic starter tools. Gather copper and iron ores from the deep mountain caverns, bring them to my anvil, and I'll forge legendary gear."</p>
+            </div>
+          </div>
+          <div class="npc-quote-card">
+            <img src="assets/sprites/portraits/npc_wulan.png" alt="Granny Willow">
+            <div class="npc-quote-text">
+              <h4>Granny Willow</h4>
+              <div class="npc-role">Old Fisher</div>
+              <p>"Hehe, young sprout. Whenever the farming gets heavy, take a walk down to the beach pier. Cast your bamboo line at dusk — the tides carry magical fish when the moon rises."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter 3 -->
+      <div class="story-chapter" id="chapter-3">
+        <span class="story-badge">CHAPTER III · THE CYCLE OF FOUR SEASONS</span>
+        <p>Life in Kenanga Valley follows the ancient calendar of nature. Four distinct 28-day seasons test your farming skills, reward your dedication, and unlock rare secrets:</p>
+
+        <div class="season-grid">
+          <div class="season-card spring">
+            <h4>🌸 SPRING · REBIRTH</h4>
+            <p>Gentle rains awaken the soil. Till the ground for fast-growing turnips, sweet potatoes, and luscious strawberries. Wild dandelions and berries carpet the forest trail.</p>
+          </div>
+          <div class="season-card summer">
+            <h4>☀️ SUMMER · ABUNDANCE</h4>
+            <p>Sun-drenched days and refreshing thunderstorms. Cultivate golden corn, juicy red tomatoes, and spicy peppers. Ocean fish teem around the sunlit coral reefs.</p>
+          </div>
+          <div class="season-card autumn">
+            <h4>🍂 AUTUMN · THE HARVEST</h4>
+            <p>Golden leaves and crisp mountain breezes. Harvest giant prize pumpkins, eggplants, and sweet yams. Prepare your barns and coops for the coming freeze.</p>
+          </div>
+          <div class="season-card winter">
+            <h4>❄️ WINTER · MYSTERY</h4>
+            <p>A blanket of sparkling snow covers the valley fields. With crops asleep, explore deep mine shafts for rare gems, upgrade your tools, and share stories beside the tavern fire.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter 4 -->
+      <div class="story-chapter" id="chapter-4">
+        <span class="story-badge">CHAPTER IV · THE ANCIENT ARC & TOKEN REVOLUTION</span>
+        <div class="token-lore-box">
+          <h3>THE MYSTERY OF $ARC TOKEN</h3>
+          <p>Long ago, the indigenous elders discovered that Kenanga Valley was blessed by an ancient subterranean crystal vein called the <b>Arc Leyline</b>. This primordial energy is what grants the soil its miraculous fertility and brings life to mystical wildlife.</p>
+          <p>Now, the Valley Council has decentralized this ancient power into the <b>$ARC Token</b> — the universal lifeblood currency of ARC FARM. Every crop you harvest, every deep ocean catch you reel in, and every community quest you complete generates real on-chain value!</p>
+
+          <div class="token-perks">
+            <div class="token-perk-item">🌾 <b>Farm-to-Earn:</b> Harvest rare produce and trade for liquid $ARC tokens on-chain.</div>
+            <div class="token-perk-item">💧 <b>Guaranteed Presale:</b> Whitelisted players secure Phase 1 token allocation at floor pricing.</div>
+            <div class="token-perk-item">🎁 <b>Player Airdrop:</b> In-game achievements and farm tiers boost your seasonal $ARC airdrop share.</div>
+            <div class="token-perk-item">🏛️ <b>DAO Governance:</b> Stake $ARC to vote on new crops, festivals, and earn treasury revenue share.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-controls">
+        <button class="btn ghost" type="button" id="prev-story-btn" style="font-size:11px;padding:8px 14px">◄ PREVIOUS CHAPTER</button>
+        <button class="btn secondary" type="button" id="next-story-btn" style="font-size:11px;padding:8px 14px">NEXT CHAPTER ►</button>
+      </div>
+
+      <div class="story-cta-box">
+        <h3>THE VALLEY CALLS YOUR NAME</h3>
+        <p>Your grandfather's deed is in your hands. The soil is fertile, and your neighbors are waiting on the hill.</p>
+        <div class="actions">
+          <a class="btn" href="#play" onclick="document.getElementById('name').focus()">CLAIM YOUR FARM & PLAY NOW ➔</a>
+          <a class="btn secondary" href="#token">JOIN $ARC TOKEN WHITELIST 🪙</a>
+        </div>
       </div>
     </div>
   </div>
@@ -175,7 +382,7 @@
       </div>
       <div>
         <p>ONE LIVING VALLEY: a single map with no loading screens — farm, village plaza, forest pond, and beach pier. Dynamic weather, day/night cycle, seasonal crops, and villagers with daily schedules.</p>
-        <p>OWN YOUR STORY: Genesis Arc NFTs turn your farmer identity, land, and achievements into collectibles you truly own. Join the whitelist below for an early mint spot.</p>
+        <p>OWN THE HARVEST: The <b>$ARC Token</b> powers the valley's living economy. Cultivate prize crops, complete village board quests, and trade on-chain. Whitelist now for guaranteed presale allocation and early airdrops!</p>
       </div>
     </div>
   </div>
@@ -189,25 +396,37 @@
       <div class="card"><div class="ico">SHOP</div><h3>SHOPS and UPGRADES</h3><p>Sari's store for seasonal seeds, the blacksmith for Copper/Iron tool upgrades, and Dadang's food stall to restore energy.</p></div>
       <div class="card"><div class="ico">HEART</div><h3>VILLAGERS</h3><p>8 villagers with schedules, gifts, hearts, and friendship stories — plus a daily request board at the Village Hall.</p></div>
       <div class="card"><div class="ico">SUN</div><h3>LIVING WORLD</h3><p>Day/night cycle, weather and forecast, 4 seasons x 28 days. Do not stay up too late or you will pass out.</p></div>
-      <div class="card"><div class="ico">CHAIN</div><h3>WEB3 READY</h3><p>Genesis Arc NFT collection + whitelist below. Your farmer, your land, your legacy — on chain.</p></div>
+      <div class="card"><div class="ico">TOKEN</div><h3>$ARC TOKEN</h3><p>Official ecosystem token. Farm-to-earn rewards, staking yields, DAO governance, and guaranteed presale allocation for whitelisted players.</p></div>
     </div>
   </div>
-  <div class="panel" id="nft">
-    <h2>Genesis Arc NFT — Whitelist</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
-    <p>The <b>Genesis Arc</b> collection is the first ARC FARM NFT drop: pixel-art farmer identities with traits earned from your playstyle. Whitelisted wallets get <b>early mint access + discounted price</b> before public sale.</p>
+  <div class="panel" id="token">
+    <h2>$ARC Token Launch — Whitelist & Early Allocation</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <p><b>$ARC</b> is the official utility & governance token powering the ARC FARM world. Whitelisted wallets get <b>guaranteed early token presale allocation, exclusive airdrop multiplier, and zero-tax trading access</b> before public DEX launch!</p>
     <div class="tiers">
-      <div class="tier"><h3>SEEDLING</h3><div class="big">FREE*</div><p>Whitelist spot<br>Early mint access<br>Discord role</p></div>
-      <div class="tier"><h3>SPROUT</h3><div class="big">HOLDER</div><p>2x mint allocation<br>Discounted mint price<br>Beta feature votes</p></div>
-      <div class="tier"><h3>HARVEST</h3><div class="big">OG</div><p>3x mint allocation<br>Lowest mint price<br>Name in game credits</p></div>
+      <div class="tier">
+        <h3>SEEDLING</h3>
+        <div class="big">AIRDROP</div>
+        <p>Guaranteed $ARC airdrop<br>Phase 1 presale access<br>Discord "Early Farmer" role</p>
+      </div>
+      <div class="tier">
+        <h3>SPROUT</h3>
+        <div class="big">2X ALLOC</div>
+        <p>2x presale token allocation<br>+25% staking APY boost<br>Beta feature DAO votes</p>
+      </div>
+      <div class="tier">
+        <h3>HARVEST</h3>
+        <div class="big">3X ALLOC</div>
+        <p>3x max presale allocation<br>Lowest private seed price<br>Founder's badge + rev-share</p>
+      </div>
     </div>
-    <div class="wlcount" id="wlcount">0 joined the whitelist</div>
+    <div class="wlcount" id="wlcount">0 joined the $ARC whitelist</div>
     <form class="wl" id="wlform">
       <div>
         <label class="field" for="wlname">Username</label>
         <input class="input" type="text" id="wlname" maxlength="16" placeholder="your game username" autocomplete="off" required>
       </div>
       <div>
-        <label class="field">Wallet — connect with Privy</label>
+        <label class="field">Wallet — connect with Privy / Web3</label>
         <div id="privy-box" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
           <button class="btn" type="button" id="privybtn">CONNECT WALLET</button>
           <span class="hint" id="privyaddr">Not connected — email, Google, or wallet. Privy creates an embedded wallet automatically.</span>
@@ -219,13 +438,13 @@
         <div class="cf-turnstile" id="turnstile" data-sitekey="REPLACE_WITH_TURNSTILE_SITE_KEY"></div>
       </div>
       <div class="full actions" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-        <button class="btn secondary" type="submit" id="wlbtn">JOIN WHITELIST</button>
+        <button class="btn secondary" type="submit" id="wlbtn">JOIN $ARC WHITELIST</button>
         <button class="btn ghost" type="button" id="wlexport">EXPORT CSV</button>
         <div class="err" id="wlerr"></div>
       </div>
     </form>
     <ol class="wl-list" id="wllist"></ol>
-    <div class="hint">* Final mint price and date announced soon. Spots are stored on the server — one per wallet, username, and network per day. Export CSV needs the admin token.</div>
+    <div class="hint">* Tokenomics, TGE (Token Generation Event) date, and presale claim contracts will be announced in Discord & X. Spots are stored on the server — one per wallet, username, and network per day. Export CSV needs the admin token.</div>
   </div>
   <div class="panel" id="characters">
     <h2>ARC FARM Villagers</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
@@ -266,10 +485,58 @@
     <p>Engine: pure JavaScript + Canvas 2D, 32px tiles. Version 0.7 — full valley, farming, animals, weather, shops and tool upgrades, background music, and pause menu with settings.</p>
   </div>
 </main>
-<footer>ARC FARM — grow, befriend, mint</footer>
+<footer>ARC FARM — grow, harvest, earn $ARC</footer>
 <script type="module">
   import { setNewGame, writeSave, writeProfile, AVATARS } from './src/core/save.js';
   import { validate, check, register, resume, currentUsername } from './src/core/account.js';
+
+  // Story Navigation
+  let activeChapter = 1;
+  const totalChapters = 4;
+  const storyNavBtns = document.querySelectorAll('.story-tab-btn');
+  const prevStoryBtn = document.getElementById('prev-story-btn');
+  const nextStoryBtn = document.getElementById('next-story-btn');
+
+  function showChapter(num) {
+    activeChapter = Math.max(1, Math.min(totalChapters, num));
+    document.querySelectorAll('.story-chapter').forEach((c, idx) => {
+      c.classList.toggle('active', idx + 1 === activeChapter);
+    });
+    storyNavBtns.forEach((b, idx) => {
+      b.classList.toggle('active', idx + 1 === activeChapter);
+    });
+    if (prevStoryBtn) prevStoryBtn.disabled = activeChapter === 1;
+    if (nextStoryBtn) nextStoryBtn.textContent = activeChapter === totalChapters ? 'ENTER GAMEPLAY ➔' : 'NEXT CHAPTER ►';
+  }
+
+  storyNavBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ch = parseInt(btn.getAttribute('data-chapter'), 10);
+      showChapter(ch);
+    });
+  });
+
+  if (prevStoryBtn) {
+    prevStoryBtn.addEventListener('click', () => {
+      if (activeChapter > 1) showChapter(activeChapter - 1);
+    });
+  }
+
+  if (nextStoryBtn) {
+    nextStoryBtn.addEventListener('click', () => {
+      if (activeChapter < totalChapters) {
+        showChapter(activeChapter + 1);
+      } else {
+        const playEl = document.getElementById('play');
+        if (playEl) {
+          playEl.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('name')?.focus();
+        }
+      }
+    });
+  }
+  showChapter(1);
+
   document.getElementById('avatars').innerHTML = AVATARS.map((a, i) => `
     <label><input type="radio" name="avatar" value="${a.id}"${i === 0 ? ' checked' : ''}>
       <img src="assets/sprites/portraits/${a.id}.png" alt="">${a.label}</label>`).join('');
@@ -348,7 +615,7 @@
       const r = await fetch('/api/whitelist/list?limit=8', { cache: 'no-store' });
       if (!r.ok) throw new Error();
       const j = await r.json();
-      wlCount.textContent = `${j.count ?? 0} joined the whitelist`;
+      wlCount.textContent = `${j.count ?? 0} joined the $ARC whitelist`;
       wlList.innerHTML = (j.entries ?? []).map((w) =>
         `<li><b>${w.name}</b> — ${w.wallet} <span style="color:#7a6647">(${w.login} · ${w.at})</span></li>`).join('');
     } catch {
@@ -429,7 +696,7 @@
         if (window.turnstile) try { turnstileReset(); } catch {}
         return;
       }
-      say(wlErr, `Welcome to the Hood, ${name}! Spot secured for ${short(connectedWallet)}.`, true);
+      say(wlErr, `Welcome to ARC FARM, ${name}! $ARC Whitelist spot secured for ${short(connectedWallet)}.`, true);
       e.target.reset();
       if (window.turnstile) try { turnstileReset(); } catch {}
       refreshWL();
