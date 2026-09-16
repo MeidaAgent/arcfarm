@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARC FARM — Cozy Farming Adventure</title>
+  <meta name="description" content="ARC FARM is a cozy pixel-art farming life-sim. Restore your grandfather's farm, befriend villagers, fish, mine, and join the Genesis NFT whitelist.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <script src="https://auth.privy.io/js/privy.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <style>
+    :root {
+      --wood: #8b5a2b; --wood-light: #c8843a; --wood-dark: #5a3418; --outline: #3a2a2a;
+      --cream: #f5e6c8; --cream-dark: #d9c39a; --grass: #6abe30; --red: #b8432e; --green: #4f9a29;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "VT323", monospace; font-size: 22px; color: var(--outline);
+      background: url("assets/sprites/terrain/grass_spring.png") repeat; background-size: 64px 64px;
+      image-rendering: pixelated;
+    }
+    h1, h2, h3, .pixel { font-family: "Press Start 2P", monospace; }
+    img { image-rendering: pixelated; }
+    header { position: sticky; top: 0; z-index: 5; background: var(--wood); border-bottom: 4px solid var(--outline); box-shadow: 0 4px 0 var(--wood-dark); }
+    nav { max-width: 1100px; margin: 0 auto; display: flex; gap: 6px; padding: 10px 16px; align-items: center; flex-wrap: wrap; }
+    nav .brand { color: var(--cream); font-size: 12px; margin-right: auto; text-decoration: none; }
+    nav a.tab { color: var(--cream); text-decoration: none; padding: 8px 12px; border: 3px solid var(--outline); background: var(--wood-light); box-shadow: 0 3px 0 var(--wood-dark); font-size: 18px; }
+    nav a.tab:hover { background: var(--cream); color: var(--outline); transform: translateY(1px); box-shadow: 0 2px 0 var(--wood-dark); }
+    main { max-width: 1100px; margin: 0 auto; padding: 18px 16px 64px; }
+    .panel { background: var(--cream); border: 4px solid var(--outline); box-shadow: 0 0 0 4px var(--wood-light), 0 0 0 8px var(--outline), 0 8px 0 8px var(--wood-dark); padding: 24px 26px; margin-bottom: 32px; }
+    .panel h2 { font-size: 16px; margin: 0 0 6px; color: var(--red); }
+    .panel .rule { display: block; width: 100%; max-width: 420px; margin: 0 0 16px; image-rendering: pixelated; }
+    .panel p { margin: 0 0 12px; line-height: 1.35; }
+    .hero { position: relative; min-height: clamp(320px, 52vh, 480px); border: 4px solid var(--outline); overflow: hidden;
+      margin-bottom: 28px; box-shadow: 0 8px 0 var(--wood-dark);
+      background: #7fc4f0 url("assets/homepage/hero.png") center 62% / cover no-repeat; }
+    .hero .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,12,6,.15), rgba(20,12,6,.55)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; text-align: center; }
+    .hero .logo { width: min(52%, 440px); filter: drop-shadow(0 5px 0 rgba(0,0,0,.4)); }
+    .hero .tagline { color: var(--cream); font-size: 28px; line-height: 1.2; text-shadow: 2px 2px 0 #000; max-width: 640px; }
+    .hero .cta { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn { display: inline-block; font-family: "Press Start 2P", monospace; font-size: 14px; padding: 14px 22px; background: var(--red); color: var(--cream); border: 4px solid var(--outline); box-shadow: 0 5px 0 #6b1f12; text-decoration: none; cursor: pointer; }
+    .btn:hover { transform: translateY(2px); box-shadow: 0 3px 0 #6b1f12; }
+    .btn.secondary { background: var(--green); box-shadow: 0 5px 0 #2f5f18; }
+    .btn.secondary:hover { box-shadow: 0 3px 0 #2f5f18; }
+    .btn.ghost { background: var(--cream); color: var(--outline); box-shadow: 0 5px 0 var(--wood-dark); }
+    .btn[disabled] { opacity: .45; pointer-events: none; }
+    .hint { font-size: 17px; color: #7a6647; margin-top: 6px; line-height: 1.4; }
+    .err { font-size: 18px; color: #b8432e; margin-top: 8px; min-height: 24px; }
+    .err.ok { color: #3f6f2a; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
+    .feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 12px; }
+    .feat .card { border: 4px solid var(--outline); background: #fff8e8; padding: 14px; box-shadow: 0 5px 0 var(--wood-dark); }
+    .feat .card h3 { font-size: 11px; margin: 4px 0 8px; color: var(--red); }
+    .feat .card p { font-size: 20px; margin: 0; }
+    .feat .ico { font-size: 34px; }
+    .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 12px 0; }
+    .tier { border: 4px solid var(--outline); background: #fff3d6; padding: 14px; text-align: center; box-shadow: 0 5px 0 var(--wood-dark); }
+    .tier h3 { font-size: 11px; color: var(--red); margin: 0 0 8px; }
+    .tier .big { font-family: "Press Start 2P", monospace; font-size: 22px; margin-bottom: 6px; }
+    .field { display: block; margin-bottom: 6px; font-size: 20px; }
+    .input { width: 100%; font: inherit; font-size: 24px; padding: 8px 12px; border: 3px solid var(--outline); background: #fff; color: var(--outline); }
+    .input::placeholder { color: #b3a488; }
+    .input:focus { outline: 3px solid var(--red); outline-offset: 2px; }
+    .wlcount { font-family: "Press Start 2P", monospace; font-size: 12px; background: var(--outline); color: var(--cream); display: inline-block; padding: 8px 12px; margin: 8px 0; }
+    form.wl { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    form.wl .full { grid-column: 1 / -1; }
+    @media (max-width: 760px) { form.wl { grid-template-columns: 1fr; } }
+    .wl-list { margin-top: 14px; font-size: 19px; }
+    .wl-list li { margin-bottom: 4px; }
+    .resume { border-top: 3px dashed var(--wood-light); margin-top: 26px; padding-top: 20px; }
+    .resume .row { display: flex; gap: 14px; align-items: stretch; flex-wrap: wrap; margin-top: 4px; }
+    .resume .row .input { flex: 1 1 240px; width: auto; }
+    .resume .row .btn { flex: 0 0 auto; }
+    form.newgame { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .avatars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .avatars label { border: 4px solid var(--outline); background: var(--cream-dark); padding: 8px; text-align: center; cursor: pointer; font-size: 17px; }
+    .avatars label img { width: 80px; height: 80px; display: block; margin: 0 auto 4px; image-rendering: pixelated; }
+    .avatars input { display: none; }
+    .avatars input:checked + label, .avatars label:has(input:checked) { background: #fff3d6; outline: 4px solid var(--red); }
+    .actions { grid-column: 1 / -1; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .keys { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 24px; }
+    kbd { font-family: "Press Start 2P", monospace; font-size: 11px; background: var(--wood-light); color: var(--cream); border: 2px solid var(--outline); box-shadow: 0 2px 0 var(--wood-dark); padding: 4px 6px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
+    .card { border: 4px solid var(--outline); background: #fff8e8; padding: 14px; box-shadow: 0 5px 0 var(--wood-dark); }
+    .card img.portrait { width: 192px; height: 192px; display: block; margin: 0 auto 8px; }
+    .card h3 { font-size: 12px; margin: 8px 0 6px; }
+    .card .role { color: var(--red); }
+    footer { text-align: center; color: var(--cream); text-shadow: 2px 2px 0 #000; font-size: 20px; padding: 10px; }
+  </style>
+</head>
+<body>
+<header>
+  <nav>
+    <a class="brand pixel" href="#top">ARC FARM</a>
+    <a class="tab" href="#play">Play</a>
+    <a class="tab" href="#about">About</a>
+    <a class="tab" href="#features">Features</a>
+    <a class="tab" href="#nft">NFT Whitelist</a>
+    <a class="tab" href="#characters">Characters</a>
+    <a class="tab" href="#howto">How to Play</a>
+  </nav>
+</header>
+<main id="top">
+  <div class="hero">
+    <div class="shade">
+      <img class="logo" src="assets/homepage/logo.png" alt="ARC FARM">
+      <div class="tagline">Restore your grandfather's farm. Befriend the village. Build your ARC FARM story — then mint it as an NFT.</div>
+      <div class="cta">
+        <a class="btn" href="#play">PLAY NOW</a>
+        <a class="btn secondary" href="#nft">JOIN WHITELIST</a>
+      </div>
+    </div>
+  </div>
+  <div class="panel" id="play">
+    <h2>Start Your Adventure</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <p>Create a username to start a new life in the valley, or continue where you left off. Runs fully in your browser — no install needed.</p>
+    <form class="newgame" id="newgame">
+      <div>
+        <label class="field" for="name">Username</label>
+        <input class="input" type="text" id="name" maxlength="16" value="" placeholder="e.g. FarmerJoe" autocomplete="off" required>
+        <div class="hint">Letters and numbers only, 3–16 characters, no spaces. You will use this username to continue later.</div>
+        <label class="field" for="farm" style="margin-top:14px">Farm name</label>
+        <input class="input" type="text" id="farm" maxlength="18" value="ARC FARM Farm" required>
+      </div>
+      <div>
+        <label class="field">Choose avatar</label>
+        <div class="avatars" id="avatars"></div>
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit" id="startbtn">START NEW</button>
+        <div class="err" id="newerr"></div>
+      </div>
+    </form>
+    <div class="resume">
+      <label class="field" for="resumename">Played before? Enter your username</label>
+      <form class="row" id="resumeform">
+        <input class="input" type="text" id="resumename" maxlength="16" placeholder="username" autocomplete="off">
+        <button class="btn secondary" type="submit" id="resumebtn">CONTINUE</button>
+      </form>
+      <div class="err" id="resumeerr"></div>
+    </div>
+  </div>
+  <div class="panel" id="about">
+    <h2>What Is ARC FARM?</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <p><b>ARC FARM</b> is a cozy pixel-art farming life-sim inspired by Harvest Moon and Stardew Valley. You inherit your grandfather's abandoned farm and move from the city to a small valley village — and what happens next is up to you.</p>
+    <div class="grid2">
+      <div>
+        <p>GOAL: turn an overgrown plot into a thriving farm across four seasons. Hoe the soil, plant seasonal seeds, water daily, harvest, and ship crops for gold. Upgrade tools, raise chickens and cows, fish the pond and the sea, mine ore, and complete daily village requests.</p>
+        <p>Along the way, greet villagers every day, give them gifts they love, and raise hearts to unlock personal stories. No game-over — just your own pace, season after season.</p>
+      </div>
+      <div>
+        <p>ONE LIVING VALLEY: a single map with no loading screens — farm, village plaza, forest pond, and beach pier. Dynamic weather, day/night cycle, seasonal crops, and villagers with daily schedules.</p>
+        <p>OWN YOUR STORY: Genesis Arc NFTs turn your farmer identity, land, and achievements into collectibles you truly own. Join the whitelist below for an early mint spot.</p>
+      </div>
+    </div>
+  </div>
+  <div class="panel" id="features">
+    <h2>Game Features</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <div class="feat">
+      <div class="card"><div class="ico">FARM</div><h3>FULL FARMING</h3><p>Hoe, plant, water, harvest. Seasonal crops, regrowing plants, rain helps, shipping bin pays every morning.</p></div>
+      <div class="card"><div class="ico">PETS</div><h3>ANIMALS</h3><p>Feed chickens and cows in the coop and barn — collect eggs and milk the next day.</p></div>
+      <div class="card"><div class="ico">FISH</div><h3>FISHING</h3><p>Get a rod from Granny Wulan, cast from shore, hook the bite, reel with the green-bar minigame. Pond and sea fish, day and night.</p></div>
+      <div class="card"><div class="ico">MINE</div><h3>FORAGE and MINE</h3><p>Chop wood, break stone, clear weeds, pick berries, mushrooms, shells and seaweed across forest and beach.</p></div>
+      <div class="card"><div class="ico">SHOP</div><h3>SHOPS and UPGRADES</h3><p>Sari's store for seasonal seeds, the blacksmith for Copper/Iron tool upgrades, and Dadang's food stall to restore energy.</p></div>
+      <div class="card"><div class="ico">HEART</div><h3>VILLAGERS</h3><p>8 villagers with schedules, gifts, hearts, and friendship stories — plus a daily request board at the Village Hall.</p></div>
+      <div class="card"><div class="ico">SUN</div><h3>LIVING WORLD</h3><p>Day/night cycle, weather and forecast, 4 seasons x 28 days. Do not stay up too late or you will pass out.</p></div>
+      <div class="card"><div class="ico">CHAIN</div><h3>WEB3 READY</h3><p>Genesis Arc NFT collection + whitelist below. Your farmer, your land, your legacy — on chain.</p></div>
+    </div>
+  </div>
+  <div class="panel" id="nft">
+    <h2>Genesis Arc NFT — Whitelist</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <p>The <b>Genesis Arc</b> collection is the first ARC FARM NFT drop: pixel-art farmer identities with traits earned from your playstyle. Whitelisted wallets get <b>early mint access + discounted price</b> before public sale.</p>
+    <div class="tiers">
+      <div class="tier"><h3>SEEDLING</h3><div class="big">FREE*</div><p>Whitelist spot<br>Early mint access<br>Discord role</p></div>
+      <div class="tier"><h3>SPROUT</h3><div class="big">HOLDER</div><p>2x mint allocation<br>Discounted mint price<br>Beta feature votes</p></div>
+      <div class="tier"><h3>HARVEST</h3><div class="big">OG</div><p>3x mint allocation<br>Lowest mint price<br>Name in game credits</p></div>
+    </div>
+    <div class="wlcount" id="wlcount">0 joined the whitelist</div>
+    <form class="wl" id="wlform">
+      <div>
+        <label class="field" for="wlname">Username</label>
+        <input class="input" type="text" id="wlname" maxlength="16" placeholder="your game username" autocomplete="off" required>
+      </div>
+      <div>
+        <label class="field">Wallet — connect with Privy</label>
+        <div id="privy-box" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button class="btn" type="button" id="privybtn">CONNECT WALLET</button>
+          <span class="hint" id="privyaddr">Not connected — email, Google, or wallet. Privy creates an embedded wallet automatically.</span>
+        </div>
+        <div class="hint">One wallet per username. Protected: 1 spot per network per day + bot check.</div>
+      </div>
+      <div class="full">
+        <!-- REPLACE WITH YOUR TURNSTILE SITE KEY (free at dash.cloudflare.com → Turnstile). Empty = dev mode. -->
+        <div class="cf-turnstile" id="turnstile" data-sitekey="REPLACE_WITH_TURNSTILE_SITE_KEY"></div>
+      </div>
+      <div class="full actions" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+        <button class="btn secondary" type="submit" id="wlbtn">JOIN WHITELIST</button>
+        <button class="btn ghost" type="button" id="wlexport">EXPORT CSV</button>
+        <div class="err" id="wlerr"></div>
+      </div>
+    </form>
+    <ol class="wl-list" id="wllist"></ol>
+    <div class="hint">* Final mint price and date announced soon. Spots are stored on the server — one per wallet, username, and network per day. Export CSV needs the admin token.</div>
+  </div>
+  <div class="panel" id="characters">
+    <h2>ARC FARM Villagers</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <div class="cards">
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/player_m.png" alt=""><h3>Alex</h3><div class="role">Playable</div><p>Straw hat, blue overalls. Inherited grandpa's farm, moved from the city.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/player_f.png" alt=""><h3>Emily</h3><div class="role">Playable</div><p>Straw hat, grey overalls. Inherited grandpa's farm, moved from the city.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/player_m2.png" alt=""><h3>Daniel</h3><div class="role">Playable</div><p>Round glasses, green shirt. Inherited grandpa's farm, moved from the city.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/player_f2.png" alt=""><h3>Sophia</h3><div class="role">Playable</div><p>Cream hijab, maroon tunic. Inherited grandpa's farm, moved from the city.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/npc_bule.png" alt=""><h3>Mayor Harold</h3><div class="role">Village chief</div><p>Wise and warm. Gives you your first tasks. Loves: coffee, pumpkin.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/npc_sari.png" alt=""><h3>Sarah</h3><div class="role">General store</div><p>Sells seeds, buys harvests. Loves: strawberry, flowers.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/npc_jaka.png" alt=""><h3>Jack</h3><div class="role">Blacksmith</div><p>Forges all day, upgrades your tools. Loves: ore, coffee.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/npc_pakde.png" alt=""><h3>Doug</h3><div class="role">Food stall</div><p>Runs the food stall east of main street. Loves: egg, chili.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/npc_ratna.png" alt=""><h3>Dr. Rachel</h3><div class="role">Village clinic</div><p>Treats villagers in the south district. Loves: herbal tonic, wildflowers.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/npc_wulan.png" alt=""><h3>Granny Willow</h3><div class="role">Old fisher</div><p>Fifty years fishing the bay. Lives in the beach hut. Loves: shells, seaweed.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/npc_rani.png" alt=""><h3>Rosie</h3><div class="role">Flower grower</div><p>Lives in the forest-edge hut near the pond. Loves: wildflowers, honeycomb.</p></div>
+      <div class="card"><img class="portrait" src="assets/sprites/portraits/npc_bayu.png" alt=""><h3>Billy</h3><div class="role">Young fisher</div><p>Almost always at the pier end. Willow's student. Loves: snapper, coffee.</p></div>
+    </div>
+  </div>
+  <div class="panel" id="howto">
+    <h2>How to Play</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <div class="keys">
+      <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / arrows — walk</div>
+      <div><kbd>Shift</kbd> (hold) — run</div>
+      <div><kbd>E</kbd> at water edge — fish (while holding rod)</div>
+      <div><kbd>E</kbd> / <kbd>Space</kbd> — use tool, talk, harvest, sleep</div>
+      <div><kbd>1</kbd>…<kbd>9</kbd>, <kbd>X</kbd>/<kbd>Z</kbd>, mouse wheel — select tool</div>
+      <div><kbd>I</kbd> / <kbd>Tab</kbd> — inventory (arrows select, <kbd>E</kbd> move, <kbd>Backspace</kbd> discard)</div>
+      <div><kbd>G</kbd> — give gift to the villager you face</div>
+      <div><kbd>C</kbd> — eat held item</div>
+      <div><kbd>Esc</kbd> — menu (Resume, Help, Settings, Quit)</div>
+      <div>Bottom-left bubble — public chat with other online players</div>
+      <div><kbd>F</kbd> — toggle zoom (also in Settings)</div>
+    </div>
+  </div>
+  <div class="panel" id="about-game">
+    <h2>About the Game</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
+    <p><b>ARC FARM</b> is a browser-based village life-sim, inspired by Harvest Moon and Stardew Valley. One valley, no loading screens, progress saved on your device.</p>
+    <p>Engine: pure JavaScript + Canvas 2D, 32px tiles. Version 0.7 — full valley, farming, animals, weather, shops and tool upgrades, background music, and pause menu with settings.</p>
+  </div>
+</main>
+<footer>ARC FARM — grow, befriend, mint</footer>
+<script type="module">
+  import { setNewGame, writeSave, writeProfile, AVATARS } from './src/core/save.js';
+  import { validate, check, register, resume, currentUsername } from './src/core/account.js';
+  document.getElementById('avatars').innerHTML = AVATARS.map((a, i) => `
+    <label><input type="radio" name="avatar" value="${a.id}"${i === 0 ? ' checked' : ''}>
+      <img src="assets/sprites/portraits/${a.id}.png" alt="">${a.label}</label>`).join('');
+  const nameEl = document.getElementById('name');
+  const newErr = document.getElementById('newerr');
+  const startBtn = document.getElementById('startbtn');
+  const resumeEl = document.getElementById('resumename');
+  const resumeErr = document.getElementById('resumeerr');
+  const resumeBtn = document.getElementById('resumebtn');
+  resumeEl.value = currentUsername() ?? '';
+  const say = (el, msg, good = false) => {
+    el.textContent = msg;
+    el.classList.toggle('ok', good);
+  };
+  let checkTimer = 0;
+  nameEl.addEventListener('input', () => {
+    const u = nameEl.value.trim();
+    clearTimeout(checkTimer);
+    const err = validate(u);
+    if (err) { say(newErr, u ? err : ''); return; }
+    say(newErr, 'Checking...');
+    checkTimer = setTimeout(async () => {
+      const r = await check(u);
+      say(newErr, r.available ? `"${u}" is available.` : r.reason, r.available);
+    }, 350);
+  });
+  document.getElementById('newgame').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = nameEl.value.trim();
+    const err = validate(username);
+    if (err) return say(newErr, err);
+    startBtn.disabled = true;
+    say(newErr, 'Registering...');
+    const profile = {
+      name: username,
+      farmName: document.getElementById('farm').value.trim() || 'ARC FARM Farm',
+      avatar: document.querySelector('input[name=avatar]:checked').value,
+    };
+    const r = await register(username, profile);
+    startBtn.disabled = false;
+    if (!r.ok) return say(newErr, r.error ?? 'Registration failed.');
+    localStorage.removeItem('lk_save_0');
+    localStorage.removeItem('lk_save_0.bak');
+    setNewGame(profile);
+    location.href = 'game.html';
+  });
+  document.getElementById('resumeform').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = resumeEl.value.trim();
+    const err = validate(username);
+    if (err) return say(resumeErr, err);
+    resumeBtn.disabled = true;
+    say(resumeErr, 'Loading save...');
+    const r = await resume(username);
+    resumeBtn.disabled = false;
+    if (!r.ok) return say(resumeErr, r.error ?? 'Failed to continue.');
+    if (r.save) writeSave(r.save, 0);
+    else { localStorage.removeItem('lk_save_0'); localStorage.removeItem('lk_save_0.bak'); }
+    writeProfile(r.profile ?? { name: r.username });
+    location.href = 'game.html';
+  });
+  const WL_KEY = 'vh_whitelist';
+  // PASTE YOUR PRIVY APP ID HERE — get it free at https://dashboard.privy.io
+  // 1. Create app → 2. Allow your domain (localhost + production) → 3. Enable
+  //    login methods (Email, Google, Wallet) + Embedded Wallets.
+  const PRIVY_APP_ID = 'cmu0xu11l059f0dl30q3wvoe4';
+  const short = (w) => (w && w.length > 10 ? `${w.slice(0, 6)}...${w.slice(-4)}` : w);
+  const wlErr = document.getElementById('wlerr');
+  const wlList = document.getElementById('wllist');
+  const wlCount = document.getElementById('wlcount');
+  const privyBtn = document.getElementById('privybtn');
+  const privyAddr = document.getElementById('privyaddr');
+  const wlBtn = document.getElementById('wlbtn');
+  async function refreshWL() {
+    try {
+      const r = await fetch('/api/whitelist/list?limit=8', { cache: 'no-store' });
+      const j = await r.json();
+      wlCount.textContent = `${j.count ?? 0} joined the whitelist`;
+      wlList.innerHTML = (j.entries ?? []).map((w) =>
+        `<li><b>${w.name}</b> — ${w.wallet} <span style="color:#7a6647">(${w.login} · ${w.at})</span></li>`).join('');
+    } catch { wlCount.textContent = 'whitelist offline — restart the server'; }
+  }
+  refreshWL();
+
+  let privy = null, connectedWallet = null, loginType = null;
+  const hasPrivySDK = () => typeof window !== 'undefined' && (window.Privy || window.PrivyClient);
+  async function initPrivy() {
+    if (PRIVY_APP_ID.startsWith('REPLACE')) {
+      say(wlErr, 'Admin: paste your Privy App ID in index.html (const PRIVY_APP_ID). Get one free at dashboard.privy.io.');
+      return;
+    }
+    if (!hasPrivySDK()) {
+      console.warn('Privy SDK not loaded (CDN blocked or wrong URL). Injected-wallet fallback active.');
+      privyAddr.textContent = 'Privy SDK failed to load — you can still connect with MetaMask directly.';
+      return;
+    }
+    try {
+      const Ctor = window.Privy?.PrivyClient ?? window.Privy ?? window.PrivyClient;
+      privy = typeof Ctor === 'function' ? new Ctor({ appId: PRIVY_APP_ID }) : Ctor;
+      const session = await privy.getAuthenticatedUser?.().catch(() => null);
+      if (session?.user?.wallet?.address) setConnected(session.user.wallet.address, session.user.email ? 'email' : 'wallet');
+    } catch (err) { console.warn('Privy init failed', err); }
+  }
+  async function connectInjected() {
+    if (!window.ethereum) { say(wlErr, 'No wallet extension found. Install MetaMask / Coinbase Wallet, or login via Privy email instead.'); return null; }
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    return accounts?.[0] ?? null;
+  }
+  function setConnected(wallet, via) {
+    connectedWallet = wallet; loginType = via;
+    privyAddr.textContent = `Connected: ${short(wallet)} (${via})`;
+    privyBtn.textContent = 'SWITCH WALLET';
+  }
+  privyBtn.addEventListener('click', async () => {
+    if (PRIVY_APP_ID.startsWith('REPLACE')) return initPrivy();
+    if (!hasPrivySDK() || !privy?.authenticate) {
+      try {
+        say(wlErr, 'Privy SDK unavailable — connecting wallet directly...');
+        const addr = await connectInjected();
+        if (!addr) return;
+        setConnected(addr, 'injected');
+        say(wlErr, `Wallet ${short(addr)} connected. Now press JOIN WHITELIST.`, true);
+      } catch { say(wlErr, 'Wallet connection rejected.'); }
+      return;
+    }
+    try {
+      say(wlErr, 'Opening Privy login...');
+      const res = await privy.authenticate();
+      const wallet = res?.user?.wallet?.address;
+      if (!wallet) return say(wlErr, 'No wallet found — Privy should auto-create an embedded wallet. Enable it in dashboard.');
+      setConnected(wallet, res.user.email ? 'email' : res.user.google ? 'google' : 'wallet');
+      say(wlErr, `Wallet ${short(wallet)} connected. Now press JOIN WHITELIST.`, true);
+    } catch { say(wlErr, 'Login cancelled.'); }
+  });
+  initPrivy();
+
+  document.getElementById('wlform').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('wlname').value.trim();
+    const err = validate(name);
+    if (err) return say(wlErr, err);
+    if (!connectedWallet) return say(wlErr, 'Connect your wallet with Privy first (button above).');
+    const turnstile = document.querySelector('[name="cf-turnstile-response"]')?.value ?? '';
+    wlBtn.disabled = true;
+    say(wlErr, 'Joining whitelist...');
+    try {
+      const r = await fetch('/api/whitelist/join', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, wallet: connectedWallet, login: loginType ?? 'privy', turnstile }),
+      });
+      const j = await r.json();
+      if (!j.ok) {
+        say(wlErr, j.error ?? 'Join failed.');
+        if (window.turnstile) try { turnstileReset(); } catch {}
+        return;
+      }
+      say(wlErr, `Welcome to the Hood, ${name}! Spot secured for ${short(connectedWallet)}.`, true);
+      e.target.reset();
+      if (window.turnstile) try { turnstileReset(); } catch {}
+      refreshWL();
+    } catch { say(wlErr, 'Server unreachable. Is tools/serve.py running?'); }
+    finally { wlBtn.disabled = false; }
+  });
+  function turnstileReset() {
+    const el = document.getElementById('turnstile');
+    const iframe = el.querySelector('iframe');
+    if (iframe && window.turnstile?.reset) {
+      const id = iframe.getAttribute('data-turnstile-id') ?? undefined;
+      window.turnstile.reset(id);
+    }
+  }
+  document.getElementById('wlexport').addEventListener('click', () => {
+    const t = prompt('Admin token (WL_ADMIN_TOKEN from server env):');
+    if (!t) return;
+    location.href = `/api/whitelist/export?admin=${encodeURIComponent(t)}`;
+  });
+</script>
+</body>
+</html>

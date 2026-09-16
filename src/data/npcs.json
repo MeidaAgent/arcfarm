@@ -1,0 +1,424 @@
+[
+  {
+    "id": "harun",
+    "name": "Mayor Harold",
+    "sprite": "npc_bule",
+    "portrait": "portrait_npc_bule",
+    "role": "Village chief",
+    "likes": [
+      "Coffee",
+      "Pumpkin"
+    ],
+    "dialogs": {
+      "default": [
+        "Welcome to ARC FARM, kid. Your grandfather was the finest farmer here.|This field has been abandoned for a long time... but the soil is still rich.",
+        "If you need seeds, see Sarah at the store. Tell her I sent you.",
+        "The villagers love being greeted. Try meeting everyone, alright."
+      ],
+      "winter": [
+        "So cold this season. Wear something warm, kid."
+      ],
+      "friend": [
+        "Your grandfather would love seeing that field alive again.|I honestly doubted anyone would take care of it.",
+        "If you need anything, just knock on the hall door. Do not be shy.",
+        "This village is small, but the people are kind. You have proven it."
+      ]
+    },
+    "schedule": [
+      {
+        "h": 6,
+        "at": "balai"
+      },
+      {
+        "h": 10,
+        "at": "plaza"
+      },
+      {
+        "h": 15,
+        "at": "papan"
+      },
+      {
+        "h": 19,
+        "at": "balai"
+      }
+    ],
+    "wants": [
+      "turnip",
+      "potato",
+      "wood",
+      "stone"
+    ]
+  },
+  {
+    "id": "sari",
+    "name": "Sarah",
+    "sprite": "npc_sari",
+    "portrait": "portrait_npc_sari",
+    "role": "General store owner",
+    "likes": [
+      "Strawberry",
+      "Flower"
+    ],
+    "dialogs": {
+      "default": [
+        "Oh, a new farmer! I am Sarah, I run the village shop.|My shop is open 9 to 5. Come by!",
+        "Turnips are easiest in spring. Four days and you can harvest.",
+        "A sunny day like this is perfect for watering crops."
+      ],
+      "autumn": [
+        "Autumn like this is perfect for pumpkin soup. Are you growing any?"
+      ],
+      "friend": [
+        "You know, I saved the best seeds just for you.|Do not tell anyone, okay.",
+        "When it is quiet, just stop by. Chatting is fine too.",
+        "My mother used to say friendly customers are a blessing. She was right."
+      ]
+    },
+    "schedule": [
+      {
+        "h": 6,
+        "at": "toko"
+      },
+      {
+        "h": 9,
+        "at": "toko"
+      },
+      {
+        "h": 17,
+        "at": "plaza"
+      },
+      {
+        "h": 20,
+        "at": "toko"
+      }
+    ],
+    "wants": [
+      "turnip",
+      "tomato",
+      "egg",
+      "wildflower"
+    ]
+  },
+  {
+    "id": "jaka",
+    "name": "Jack",
+    "sprite": "npc_jaka",
+    "portrait": "portrait_npc_jaka",
+    "role": "Blacksmith",
+    "likes": [
+      "Ore",
+      "Coffee"
+    ],
+    "dialogs": {
+      "default": [
+        "A dull hoe only gives you a sore back, kid.|Bring ore to my smithy and I will make your tools sharper.",
+        "Level one tools are just warm-up. If you are serious about farming, upgrade.",
+        "Hear that hammer? That is the sound of a village still alive."
+      ],
+      "summer": [
+        "The heat before the furnace in summer is... well, that is the job."
+      ],
+      "friend": [
+        "I look after your tools myself when you bring them. Others wait in line.",
+        "I used to think city kids would not last here. I was wrong.",
+        "When I can no longer lift this hammer, maybe you will carry on."
+      ]
+    },
+    "schedule": [
+      {
+        "h": 6,
+        "at": "bengkel"
+      },
+      {
+        "h": 9,
+        "at": "bengkel"
+      },
+      {
+        "h": 16,
+        "at": "warung"
+      },
+      {
+        "h": 20,
+        "at": "bengkel"
+      }
+    ],
+    "wants": [
+      "stone",
+      "copper_ore",
+      "iron_ore",
+      "coal",
+      "wood"
+    ]
+  },
+  {
+    "id": "dadang",
+    "name": "Doug",
+    "sprite": "npc_pakde",
+    "portrait": "portrait_npc_pakde",
+    "role": "Food stall owner",
+    "likes": [
+      "Egg",
+      "Chili"
+    ],
+    "dialogs": {
+      "default": [
+        "Coffee, kid? One glass and your energy is back.|My stall is open from early morning till night.",
+        "If your energy runs out in the field, do not push it. Stop by first.",
+        "All my cooking ingredients come from the villagers' gardens. If your harvest is good, I will buy it."
+      ],
+      "winter": [
+        "In winter like this, ginger tea sells fast. Want one?"
+      ],
+      "friend": [
+        "Your coffee is ready before you arrive. I memorized it.",
+        "This stall is lively when you stop by. No idea why.",
+        "I will cook up a new recipe later, you will be the first to try it."
+      ]
+    },
+    "schedule": [
+      {
+        "h": 6,
+        "at": "warung"
+      },
+      {
+        "h": 11,
+        "at": "warung"
+      },
+      {
+        "h": 18,
+        "at": "plaza"
+      },
+      {
+        "h": 21,
+        "at": "warung"
+      }
+    ],
+    "wants": [
+      "tomato",
+      "chili",
+      "egg",
+      "milk",
+      "mushroom"
+    ]
+  },
+  {
+    "id": "ratna",
+    "name": "Dr. Rachel",
+    "sprite": "npc_ratna",
+    "portrait": "portrait_npc_ratna",
+    "role": "Village clinic",
+    "likes": [
+      "Herbal Tonic",
+      "Wildflower"
+    ],
+    "dialogs": {
+      "default": [
+        "The clinic is open every day, kid. If your energy runs out, do not force the walk home.|Just come, I will take care of it.",
+        "The thing I treat most here? Backs. Every farmer is the same.",
+        "Eat enough before heading to the field. That is the cheapest medicine I have."
+      ],
+      "winter": [
+        "Many catch colds in winter. Do not sleep too late, okay."
+      ],
+      "friend": [
+        "Your hands are rougher, but your face looks healthier. That is good.",
+        "I am glad someone listens when I talk about my patients.",
+        "Do not hesitate to visit even when you are not sick. I get lonely sometimes too."
+      ]
+    },
+    "schedule": [
+      {
+        "h": 6,
+        "at": "klinik"
+      },
+      {
+        "h": 9,
+        "at": "klinik"
+      },
+      {
+        "h": 17,
+        "at": "plaza"
+      },
+      {
+        "h": 20,
+        "at": "klinik"
+      }
+    ],
+    "wants": [
+      "mushroom",
+      "wildflower",
+      "berry",
+      "honeycomb"
+    ]
+  },
+  {
+    "id": "wulan",
+    "name": "Granny Willow",
+    "sprite": "npc_wulan",
+    "portrait": "portrait_npc_wulan",
+    "role": "Old fisher",
+    "likes": [
+      "Seashell",
+      "Seaweed"
+    ],
+    "dialogs": {
+      "default": [
+        "Fifty years I have fished this bay, dear.|The sea is still the same, only I grow slower.",
+        "Good bait is not the expensive kind, but the one that waits patiently.",
+        "When the tide is low, try walking the sand. Many shells are left behind."
+      ],
+      "autumn": [
+        "Autumn wind drives fish deeper. Be a little patient when fishing."
+      ],
+      "friend": [
+        "Sit here, dear. Let me tell you when this bay was still full of boats.",
+        "When I can no longer sail, you look after this beach, okay.",
+        "You are patient. Patience is a fisher's greatest asset."
+      ]
+    },
+    "gift": {
+      "item": "fishing_rod",
+      "text": "Oh, your hands are empty. No rod yet, huh?|Take my old one. My hands are not as strong as they used to be, you use it.|Buy bait at Sarah's shop. Stand at the water edge, press E, then be patient a little."
+    },
+    "schedule": [
+      {
+        "h": 6,
+        "at": "pantai"
+      },
+      {
+        "h": 10,
+        "at": "dermaga"
+      },
+      {
+        "h": 16,
+        "at": "pantai"
+      },
+      {
+        "h": 20,
+        "at": "pantai"
+      }
+    ],
+    "wants": [
+      "fish_tilapia",
+      "fish_snapper",
+      "seaweed",
+      "seashell"
+    ]
+  },
+  {
+    "id": "rani",
+    "name": "Rosie",
+    "sprite": "npc_rani",
+    "portrait": "portrait_npc_rani",
+    "role": "Flower grower",
+    "likes": [
+      "Wildflower",
+      "Honeycomb"
+    ],
+    "dialogs": {
+      "default": [
+        "Oh, you are the grandchild of the old farmer?|My hut is at the forest edge. Stop by if you pass, many flowers are blooming.",
+        "The wildflowers in this forest are tougher than the ones I plant myself. Funny, huh.",
+        "If you find a flower I have never seen, please bring it to me."
+      ],
+      "spring": [
+        "Spring is my busiest season. The whole forest blooms at once."
+      ],
+      "friend": [
+        "I saved the finest seedlings for you. Slow to grow, but worth it.",
+        "This forest feels less lively when you do not pass by.",
+        "If you stand still here a moment, the butterflies will come closer."
+      ]
+    },
+    "schedule": [
+      {
+        "h": 6,
+        "at": "hutan"
+      },
+      {
+        "h": 9,
+        "at": "kolam"
+      },
+      {
+        "h": 15,
+        "at": "hutan"
+      },
+      {
+        "h": 19,
+        "at": "hutan"
+      }
+    ],
+    "wants": [
+      "berry",
+      "wildflower",
+      "honeycomb",
+      "nest",
+      "mushroom"
+    ]
+  },
+  {
+    "id": "bayu",
+    "name": "Billy",
+    "sprite": "npc_bayu",
+    "portrait": "portrait_npc_bayu",
+    "role": "Young fisher",
+    "likes": [
+      "Snapper",
+      "Coffee"
+    ],
+    "dialogs": {
+      "default": [
+        "Morning! I am Billy, usually at the pier.|If you want to learn fishing, just stand next to me.",
+        "Granny Willow taught me. She says the sea dislikes hasty people.",
+        "The big fish are in deep water, at the pier end. The shore ones are small."
+      ],
+      "summer": [
+        "When it is hot like this, fish rise to the surface. Try fishing in the afternoon."
+      ],
+      "friend": [
+        "When we are free, let us fish together till evening. Want to?",
+        "You are the only one who can stand on the pier as long as I do.",
+        "Granny Willow says you are a more patient student than I was."
+      ]
+    },
+    "schedule": [
+      {
+        "h": 6,
+        "at": "dermaga"
+      },
+      {
+        "h": 11,
+        "at": "dermaga"
+      },
+      {
+        "h": 17,
+        "at": "warung"
+      },
+      {
+        "h": 21,
+        "at": "pantai"
+      }
+    ],
+    "wants": [
+      "fish_catfish",
+      "fish_gourami",
+      "fish_tuna",
+      "squid",
+      "driftwood"
+    ]
+  },
+  {
+    "id": "maung",
+    "name": "Bramble",
+    "sprite": "npc_maung",
+    "portrait": null,
+    "role": "Guardian of the woods behind the Village Hall",
+    "beast": true,
+    "roam": 6,
+    "dialogs": {
+      "default": [
+        "Raawwrrr"
+      ]
+    }
+  }
+]
