@@ -189,6 +189,63 @@
     .story-cta-box h3 { font-size: 13px; color: #ffe89e; margin: 0 0 8px; }
     .story-cta-box p { font-size: 20px; margin: 0 0 14px; }
     .story-cta-box .actions { justify-content: center; }
+
+    /* Realms showcase grid */
+    .realms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px; }
+    .realm-card {
+      background: #fff8e8; border: 3px solid var(--outline); padding: 12px; box-shadow: 0 4px 0 var(--wood-dark);
+      text-align: center;
+    }
+    .realm-card img { height: 84px; width: auto; max-width: 100%; display: block; margin: 0 auto 8px; image-rendering: pixelated; }
+    .realm-card h4 { font-family: "Press Start 2P", monospace; font-size: 10px; margin: 6px 0 4px; color: var(--red); }
+    .realm-card p { font-size: 18px; margin: 0; line-height: 1.25; text-align: left; }
+
+    /* Cinematic Story Modal */
+    .story-modal-backdrop {
+      position: fixed; inset: 0; background: rgba(20,12,6,.88); z-index: 9999;
+      display: none; align-items: center; justify-content: center; padding: 16px;
+      backdrop-filter: blur(4px);
+    }
+    .story-modal-backdrop.open { display: flex; animation: storyFadeIn .25s ease-out; }
+    .story-modal {
+      background: var(--cream); border: 5px solid var(--outline);
+      box-shadow: 0 0 0 5px var(--wood-light), 0 0 0 10px var(--outline), 0 12px 36px rgba(0,0,0,.85);
+      max-width: 780px; width: 100%; max-height: 92vh; overflow-y: auto; padding: 22px;
+      display: flex; flex-direction: column; gap: 14px; position: relative;
+    }
+    .story-modal-header {
+      display: flex; justify-content: space-between; align-items: center; border-bottom: 3px dashed var(--wood-light);
+      padding-bottom: 10px;
+    }
+    .story-modal-title { font-family: "Press Start 2P", monospace; font-size: 12px; color: var(--red); margin: 0; }
+    .story-modal-close {
+      font-family: "Press Start 2P", monospace; font-size: 11px; background: var(--red); color: #fff;
+      border: 2px solid var(--outline); cursor: pointer; padding: 4px 8px; box-shadow: 0 2px 0 #6b1f12;
+    }
+    .story-dialog-box {
+      background: #251b14; color: var(--cream); border: 4px solid var(--outline);
+      box-shadow: inset 0 0 14px rgba(0,0,0,.7); padding: 18px 20px;
+      display: flex; gap: 16px; align-items: flex-start; min-height: 180px;
+    }
+    @media (max-width: 600px) { .story-dialog-box { flex-direction: column; align-items: center; text-align: center; } }
+    .story-speaker-img {
+      width: 96px; height: 96px; border: 3px solid var(--cream); background: var(--wood-dark);
+      flex-shrink: 0; image-rendering: pixelated; box-shadow: 0 4px 0 #000;
+    }
+    .story-dialog-content { flex: 1; }
+    .story-speaker-name {
+      font-family: "Press Start 2P", monospace; font-size: 12px; color: #ffca28;
+      margin: 0 0 8px; text-shadow: 1px 1px 0 #000;
+    }
+    .story-dialog-text {
+      font-size: 21px; line-height: 1.35; margin: 0; min-height: 64px; text-align: left;
+    }
+    .story-modal-footer {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+    }
+    .story-progress {
+      font-family: "Press Start 2P", monospace; font-size: 10px; color: var(--wood-dark);
+    }
   </style>
 </head>
 <body>
@@ -211,6 +268,7 @@
       <div class="tagline">Restore your grandfather's farm. Befriend the village. Harvest rare crops, uncover ancient secrets, and earn $ARCF Token!</div>
       <div class="cta">
         <a class="btn" href="#story">PROLOGUE STORY</a>
+        <button class="btn" type="button" id="hero-theater-btn" style="background:#ffb300;color:#2b1605;border-color:var(--outline);box-shadow:0 5px 0 #b26a00">🎬 WATCH PROLOGUE</button>
         <a class="btn secondary" href="#play">PLAY GAME</a>
         <a class="btn ghost" href="#token">$ARCF TOKEN</a>
       </div>
@@ -225,6 +283,10 @@
       <button class="story-tab-btn" type="button" data-chapter="2">🌄 II. ARRIVAL AT VALLEY</button>
       <button class="story-tab-btn" type="button" data-chapter="3">🌾 III. FOUR SEASONS</button>
       <button class="story-tab-btn" type="button" data-chapter="4">🪙 IV. SECRET OF $ARCF</button>
+      <button class="story-tab-btn" type="button" data-chapter="5">🗺️ V. VALLEY REALMS</button>
+      <button class="btn" type="button" id="story-watch-btn" style="font-size:10px;padding:8px 12px;background:#c8843a;color:var(--cream);margin-left:auto">🎬 PLAY CUTSCENE</button>
+      <button class="btn ghost" type="button" id="bgm-toggle-btn" style="font-size:10px;padding:8px 12px">🎵 BGM: OFF</button>
+      <audio id="theme-bgm" src="assets/audio/music/theme.mp3" loop preload="none"></audio>
     </div>
 
     <div class="story-content">
@@ -328,6 +390,50 @@
         </div>
       </div>
 
+      <!-- Chapter 5 -->
+      <div class="story-chapter" id="chapter-5">
+        <span class="story-badge">CHAPTER V · EXPLORE THE REALMS OF KENANGA VALLEY</span>
+        <p>Beyond your farmhouse gate lies a living, seamless valley without a single loading screen. Every corner has its own pulse, stories, and characters to befriend:</p>
+        
+        <div class="realms-grid">
+          <div class="realm-card">
+            <img src="assets/sprites/buildings/house_lv1.png" alt="Homestead">
+            <h4>🏡 GRANDPA'S HOMESTEAD</h4>
+            <p>Your ancestral wooden farmhouse, fertile soil plots, old chicken coop, and shipping bin where every night's harvest turns into morning gold.</p>
+          </div>
+          <div class="realm-card">
+            <img src="assets/sprites/buildings/town_hall.png" alt="Town Hall">
+            <h4>🏛️ VILLAGE HALL & PLAZA</h4>
+            <p>The beating heart of Kenanga. Mayor Harold's office, the stone fountain, seasonal festival grounds, and the daily citizen request board.</p>
+          </div>
+          <div class="realm-card">
+            <img src="assets/sprites/buildings/store.png" alt="General Store">
+            <h4>🌾 SARAH'S GENERAL STORE</h4>
+            <p>Shelves lined with seasonal crop seeds (spring strawberries, summer corn, autumn pumpkins), fertilizer, and farm tools.</p>
+          </div>
+          <div class="realm-card">
+            <img src="assets/sprites/buildings/blacksmith.png" alt="Blacksmith">
+            <h4>🔨 JACK'S FORGE</h4>
+            <p>The anvil glows red with coals. Bring raw copper and iron ores from the caverns to upgrade your watering can, hoe, axe, and pickaxe.</p>
+          </div>
+          <div class="realm-card">
+            <img src="assets/sprites/buildings/warung.png" alt="Food Stall">
+            <h4>🍜 DOUG'S LANTERN WARUNG</h4>
+            <p>Fragrant spices drift through the air. Eat savory street food, hot chili dishes, and energizing broths to restore drained stamina.</p>
+          </div>
+          <div class="realm-card">
+            <img src="assets/sprites/buildings/dock.png" alt="Beach Pier">
+            <h4>🌊 WHISPERING BEACH & PIER</h4>
+            <p>Granny Willow and Billy cast their lines into turquoise tides. Catch ocean snappers, tuna, shells, and discover coastal flotsam.</p>
+          </div>
+          <div class="realm-card">
+            <img src="assets/sprites/buildings/clinic.png" alt="Clinic">
+            <h4>🩺 DR. RACHEL'S CLINIC</h4>
+            <p>Healing herbal elixirs, wildflower tonics, and care for exhausted farmers who work past the 2:00 AM curfew!</p>
+          </div>
+        </div>
+      </div>
+
       <div class="story-controls">
         <button class="btn ghost" type="button" id="prev-story-btn" style="font-size:11px;padding:8px 14px">◄ PREVIOUS CHAPTER</button>
         <button class="btn secondary" type="button" id="next-story-btn" style="font-size:11px;padding:8px 14px">NEXT CHAPTER ►</button>
@@ -337,12 +443,39 @@
         <h3>THE VALLEY CALLS YOUR NAME</h3>
         <p>Your grandfather's deed is in your hands. The soil is fertile, and your neighbors are waiting on the hill.</p>
         <div class="actions">
+          <button class="btn" type="button" id="cta-watch-btn" style="background:#ffb300;color:#2b1605;border-color:var(--outline);box-shadow:0 5px 0 #b26a00">🎬 WATCH PROLOGUE CUTSCENE</button>
           <a class="btn" href="#play" onclick="document.getElementById('name').focus()">CLAIM YOUR FARM & PLAY NOW ➔</a>
           <a class="btn secondary" href="#token">JOIN $ARCF TOKEN WHITELIST 🪙</a>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Cinematic Prologue Theater Modal -->
+  <div class="story-modal-backdrop" id="story-modal">
+    <div class="story-modal">
+      <div class="story-modal-header">
+        <h3 class="story-modal-title">ARC FARM · PROLOGUE CINEMATIC THEATER</h3>
+        <button class="story-modal-close" type="button" id="close-story-modal">✕ CLOSE</button>
+      </div>
+      <div class="story-dialog-box">
+        <img class="story-speaker-img" id="modal-speaker-img" src="assets/sprites/portraits/player_m.png" alt="Speaker">
+        <div class="story-dialog-content">
+          <div class="story-speaker-name" id="modal-speaker-name">Narrator</div>
+          <div class="story-dialog-text" id="modal-dialog-text">Loading prologue...</div>
+        </div>
+      </div>
+      <div class="story-modal-footer">
+        <span class="story-progress" id="modal-story-progress">SCENE 1 / 6</span>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn ghost" type="button" id="modal-prev-btn" style="font-size:10px;padding:8px 12px">◄ PREV</button>
+          <button class="btn secondary" type="button" id="modal-next-btn" style="font-size:10px;padding:8px 12px">NEXT SCENE ►</button>
+          <button class="btn" type="button" id="modal-skip-btn" style="font-size:10px;padding:8px 12px">ENTER GAMEPLAY ➔</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="panel" id="play">
     <h2>Start Your Adventure</h2><img class="rule" src="assets/homepage/orn_divider.png" alt="">
     <p>Create a username to start a new life in the valley, or continue where you left off. Runs fully in your browser — no install needed.</p>
@@ -360,6 +493,10 @@
       </div>
       <div class="actions">
         <button class="btn" type="submit" id="startbtn">START NEW</button>
+        <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer">
+          <input type="checkbox" id="playintro" checked style="width:20px;height:20px;accent-color:var(--red)">
+          <span>Play story cutscene before launching game</span>
+        </label>
         <div class="err" id="newerr"></div>
       </div>
     </form>
@@ -492,7 +629,7 @@
 
   // Story Navigation
   let activeChapter = 1;
-  const totalChapters = 4;
+  const totalChapters = 5;
   const storyNavBtns = document.querySelectorAll('.story-tab-btn');
   const prevStoryBtn = document.getElementById('prev-story-btn');
   const nextStoryBtn = document.getElementById('next-story-btn');
@@ -536,6 +673,131 @@
     });
   }
   showChapter(1);
+
+  // Background Music Controller
+  const bgmAudio = document.getElementById('theme-bgm');
+  const bgmBtn = document.getElementById('bgm-toggle-btn');
+  let bgmPlaying = false;
+  if (bgmBtn && bgmAudio) {
+    bgmBtn.addEventListener('click', () => {
+      if (bgmPlaying) {
+        bgmAudio.pause();
+        bgmBtn.textContent = '🎵 BGM: OFF';
+        bgmPlaying = false;
+      } else {
+        bgmAudio.volume = 0.45;
+        bgmAudio.play().then(() => {
+          bgmBtn.textContent = '🎵 BGM: ON';
+          bgmPlaying = true;
+        }).catch(() => {
+          bgmBtn.textContent = '🎵 BGM: TAP TO PLAY';
+        });
+      }
+    });
+  }
+
+  // Cinematic Prologue Cutscene Theater
+  const storyModal = document.getElementById('story-modal');
+  const closeStoryModal = document.getElementById('close-story-modal');
+  const modalSpeakerImg = document.getElementById('modal-speaker-img');
+  const modalSpeakerName = document.getElementById('modal-speaker-name');
+  const modalDialogText = document.getElementById('modal-dialog-text');
+  const modalStoryProgress = document.getElementById('modal-story-progress');
+  const modalPrevBtn = document.getElementById('modal-prev-btn');
+  const modalNextBtn = document.getElementById('modal-next-btn');
+  const modalSkipBtn = document.getElementById('modal-skip-btn');
+
+  let currentCutsceneIndex = 0;
+  let customHeroName = 'Farmer';
+  let customFarmName = 'Sunrise Farm';
+  let customAvatar = 'player_m';
+
+  const getCutsceneScenes = () => [
+    {
+      speaker: 'The City Metropolis',
+      img: `assets/sprites/portraits/${customAvatar}.png`,
+      text: `Cold rain streaks the 40th-floor apartment window. Another exhausting 14-hour workday in the gray towers has ended. Staring into the rainy dark, you wonder if life is meant to be more than concrete and deadlines...`
+    },
+    {
+      speaker: "Grandpa's Secret Box",
+      img: 'assets/sprites/portraits/npc_bule.png',
+      text: `A sudden knock rattles your door. A courier delivers an ancient cedar chest stamped with red beeswax. Inside lies a tarnished brass key, fragrant kenanga petals, and a letter: "My dear ${customHeroName}, leave the smog behind. I leave you our family homestead in Kenanga Valley. Your true life is waiting on the hill."`
+    },
+    {
+      speaker: 'The Mountain Train',
+      img: `assets/sprites/portraits/${customAvatar}.png`,
+      text: `You pack a leather satchel and board the morning steam train. The iron wheels roar over wooden trestles. The gray city fades into the distance, replaced by emerald mountain ridges, misty rivers, and wild kenanga blooms.`
+    },
+    {
+      speaker: 'Mayor Harold & Sarah',
+      img: 'assets/sprites/portraits/npc_sari.png',
+      text: `You step down at the cobblestone plaza. Mayor Harold beams: "${customHeroName}! You have your grandfather's fiery eyes! Here is your starter hoe and watering can." Sarah waves from the store: "Fresh seasonal seeds await. Welcome home to ${customFarmName}!"`
+    },
+    {
+      speaker: 'The Legend of $ARCF',
+      img: 'assets/sprites/portraits/npc_wulan.png',
+      text: `At the overgrown gates of ${customFarmName}, you feel a deep, warm pulse vibrating through the soil. Granny Willow smiles: "The primordial Arc Leyline has awakened for you, child. Farm the land, reap golden harvests, and build the future of $ARCF Token!"`
+    },
+    {
+      speaker: 'Dawn of Year 1, Spring 1',
+      img: `assets/sprites/portraits/${customAvatar}.png`,
+      text: `The morning sun crests the eastern peaks. The valley rooster crows. In your hands are the tools of your ancestors, the seed pouch is full, and your legend begins right now!`
+    }
+  ];
+
+  function renderCutsceneScene(idx) {
+    const scenes = getCutsceneScenes();
+    currentCutsceneIndex = Math.max(0, Math.min(scenes.length - 1, idx));
+    const s = scenes[currentCutsceneIndex];
+    modalSpeakerName.textContent = s.speaker;
+    modalSpeakerImg.src = s.img;
+    modalDialogText.textContent = s.text;
+    modalStoryProgress.textContent = `SCENE ${currentCutsceneIndex + 1} / ${scenes.length}`;
+    modalPrevBtn.disabled = currentCutsceneIndex === 0;
+    modalNextBtn.textContent = currentCutsceneIndex === scenes.length - 1 ? 'ENTER GAMEPLAY ➔' : 'NEXT SCENE ►';
+  }
+
+  function openPrologueModal(heroName, farmName, avatar) {
+    if (heroName) customHeroName = heroName;
+    if (farmName) customFarmName = farmName;
+    if (avatar) customAvatar = avatar;
+    renderCutsceneScene(0);
+    storyModal.classList.add('open');
+    if (!bgmPlaying && bgmAudio) {
+      bgmAudio.volume = 0.45;
+      bgmAudio.play().then(() => {
+        bgmBtn.textContent = '🎵 BGM: ON';
+        bgmPlaying = true;
+      }).catch(() => {});
+    }
+  }
+
+  function closePrologueModal() {
+    storyModal.classList.remove('open');
+  }
+
+  closeStoryModal?.addEventListener('click', closePrologueModal);
+
+  modalPrevBtn?.addEventListener('click', () => {
+    if (currentCutsceneIndex > 0) renderCutsceneScene(currentCutsceneIndex - 1);
+  });
+
+  modalNextBtn?.addEventListener('click', () => {
+    const scenes = getCutsceneScenes();
+    if (currentCutsceneIndex < scenes.length - 1) {
+      renderCutsceneScene(currentCutsceneIndex + 1);
+    } else {
+      location.href = 'game.html';
+    }
+  });
+
+  modalSkipBtn?.addEventListener('click', () => {
+    location.href = 'game.html';
+  });
+
+  document.getElementById('hero-theater-btn')?.addEventListener('click', () => openPrologueModal());
+  document.getElementById('story-watch-btn')?.addEventListener('click', () => openPrologueModal());
+  document.getElementById('cta-watch-btn')?.addEventListener('click', () => openPrologueModal());
 
   document.getElementById('avatars').innerHTML = AVATARS.map((a, i) => `
     <label><input type="radio" name="avatar" value="${a.id}"${i === 0 ? ' checked' : ''}>
@@ -581,7 +843,12 @@
     localStorage.removeItem('lk_save_0');
     localStorage.removeItem('lk_save_0.bak');
     setNewGame(profile);
-    location.href = 'game.html';
+    const shouldPlayIntro = document.getElementById('playintro')?.checked;
+    if (shouldPlayIntro) {
+      openPrologueModal(profile.name, profile.farmName, profile.avatar);
+    } else {
+      location.href = 'game.html';
+    }
   });
   document.getElementById('resumeform').addEventListener('submit', async (e) => {
     e.preventDefault();
