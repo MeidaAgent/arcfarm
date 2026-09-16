@@ -1,4 +1,4 @@
-"""Server-side $ARC token whitelist: anti-sybil layer.
+"""Server-side $ARCF token whitelist: anti-sybil layer.
 
 Why server-side: localStorage lives in one browser, so anyone can join 100x
 by opening 100 browsers/profiles. This table lives on the server:
