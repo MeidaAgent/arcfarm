@@ -129,7 +129,7 @@
         <input class="input" type="text" id="name" maxlength="16" value="" placeholder="e.g. FarmerJoe" autocomplete="off" required>
         <div class="hint">Letters and numbers only, 3–16 characters, no spaces. You will use this username to continue later.</div>
         <label class="field" for="farm" style="margin-top:14px">Farm name</label>
-        <input class="input" type="text" id="farm" maxlength="18" value="ARC FARM Farm" required>
+        <input class="input" type="text" id="farm" maxlength="18" placeholder="e.g. Sunrise Farm" required>
       </div>
       <div>
         <label class="field">Choose avatar</label>
@@ -289,7 +289,7 @@
     say(newErr, 'Registering...');
     const profile = {
       name: username,
-      farmName: document.getElementById('farm').value.trim() || 'ARC FARM Farm',
+      farmName: document.getElementById('farm').value.trim() || 'My Farm',
       avatar: document.querySelector('input[name=avatar]:checked').value,
     };
     const r = await register(username, profile);
