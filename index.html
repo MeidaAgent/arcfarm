@@ -26,7 +26,8 @@
     img { image-rendering: pixelated; }
     header { position: sticky; top: 0; z-index: 5; background: var(--wood); border-bottom: 4px solid var(--outline); box-shadow: 0 4px 0 var(--wood-dark); }
     nav { max-width: 1100px; margin: 0 auto; display: flex; gap: 6px; padding: 10px 16px; align-items: center; flex-wrap: wrap; }
-    nav .brand { color: var(--cream); font-size: 12px; margin-right: auto; text-decoration: none; }
+    nav .brand { margin-right: auto; text-decoration: none; display: flex; align-items: center; }
+    nav .brand img { height: 36px; width: auto; filter: drop-shadow(0 2px 0 rgba(0,0,0,.5)); image-rendering: pixelated; }
     nav a.tab { color: var(--cream); text-decoration: none; padding: 8px 12px; border: 3px solid var(--outline); background: var(--wood-light); box-shadow: 0 3px 0 var(--wood-dark); font-size: 18px; }
     nav a.tab:hover { background: var(--cream); color: var(--outline); transform: translateY(1px); box-shadow: 0 2px 0 var(--wood-dark); }
     main { max-width: 1100px; margin: 0 auto; padding: 18px 16px 64px; }
@@ -95,7 +96,7 @@
 <body>
 <header>
   <nav>
-    <a class="brand pixel" href="#top">ARC FARM</a>
+    <a class="brand" href="#top"><img src="assets/homepage/logo.png" alt="ARC FARM"></a>
     <a class="tab" href="#play">Play</a>
     <a class="tab" href="#about">About</a>
     <a class="tab" href="#features">Features</a>
