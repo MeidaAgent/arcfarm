@@ -71,7 +71,7 @@ export async function check(username) {
     const d = await post('check', { username: username.trim() });
     return { available: !!d.available, reason: d.reason ?? '' };
   } catch {
-    return { available: false, reason: 'Server not connected — try again.', offline: true };
+    return { available: true, reason: '', offline: true };
   }
 }
 
@@ -81,7 +81,10 @@ export async function register(username, profile) {
     if (d.ok) { setUsername(d.username); setSessionKey(d.key); }
     return d;
   } catch {
-    return { ok: false, error: 'Server not connected.', offline: true };
+    // Server offline — simpan lokal saja, game tetap bisa dimainkan
+    setUsername(username.trim());
+    setSessionKey('offline');
+    return { ok: true, username: username.trim(), key: 'offline', offline: true };
   }
 }
 
@@ -91,7 +94,11 @@ export async function resume(username) {
     if (d.ok) { setUsername(d.username); setSessionKey(d.key); }
     return d;
   } catch {
-    return { ok: false, error: 'Server not connected.', offline: true };
+    // Server offline — coba lanjut dari localStorage
+    const u = (username ?? '').trim();
+    setUsername(u);
+    setSessionKey('offline');
+    return { ok: true, username: u, key: 'offline', offline: true };
   }
 }
 
