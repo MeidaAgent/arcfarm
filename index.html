@@ -330,11 +330,14 @@
   async function refreshWL() {
     try {
       const r = await fetch('/api/whitelist/list?limit=8', { cache: 'no-store' });
+      if (!r.ok) throw new Error();
       const j = await r.json();
       wlCount.textContent = `${j.count ?? 0} joined the whitelist`;
       wlList.innerHTML = (j.entries ?? []).map((w) =>
         `<li><b>${w.name}</b> — ${w.wallet} <span style="color:#7a6647">(${w.login} · ${w.at})</span></li>`).join('');
-    } catch { wlCount.textContent = 'whitelist offline — restart the server'; }
+    } catch {
+      wlCount.style.display = 'none';
+    }
   }
   refreshWL();
 
